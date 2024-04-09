@@ -1,20 +1,41 @@
 import { FastifyInstance } from "fastify"
 import { z } from 'zod'
+import { serializerCompiler, validatorCompiler, ZodTypeProvider } from "fastify-type-provider-zod";
 import { prisma } from "../libs/prisma"
 import { generateSlug } from "../utils/generate-slug"
 
 export async function createEvent(app: FastifyInstance) {
     
-    app.post('/events', async (request, reply)=> {
-        const createEventBody = z.object({
-            title: z.string().min(4),
-            details: z.string().nullable(),
-            maximumAttendees: z.number().int().positive().nullable()
-        })
+    app.withTypeProvider<ZodTypeProvider>().post('/events', {
+        schema: {
+            body: z.object({
+                title: z.string().min(4),
+                details: z.string().nullable(),
+                maximumAttendees: z.number().int().positive().nullable()
+            }),
+            response: {
+                201: z.object({
+                    eventId: z.string().uuid(),
+                }),
+                400: z.object({
+                    message: z.string()
+                })
+            }
+        }
+    } ,async (request, reply)=> {
         
-        const {title, details, maximumAttendees} = createEventBody.parse(request.body)
+        const {title, details, maximumAttendees} = request.body
         const slug = generateSlug(title)
 
+        const eventWithSameSlug = prisma.event.findUnique({
+            where: {
+                slug
+            }
+        })
+
+        if(eventWithSameSlug !== null){
+            return reply.status(400).send({"message": "event already created."})
+        }
         const new_event =  await prisma.event.create({
             data: {
                 title,
