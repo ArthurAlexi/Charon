@@ -1,4 +1,4 @@
-import { prisma } from './../libs/prisma';
+import { prisma } from '../libs/prisma';
 import { FastifyInstance } from "fastify";
 import { z } from 'zod'
 import { ZodTypeProvider } from "fastify-type-provider-zod";
