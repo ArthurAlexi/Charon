@@ -1,6 +1,6 @@
-# pass.in
+# Caronte
 
-O pass.in é uma aplicação de gestão de participantes em eventos presenciais.
+O Caronte é uma aplicação de gestão de participantes em eventos presenciais.
 
 A ferramenta permite que o organizador cadastre um evento e abra uma página pública de inscrição.
 
