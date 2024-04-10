@@ -1,0 +1,19 @@
+POST http://localhost:3333/events
+Content-Type: application/json
+
+{
+    "title": "A new Event",
+    "details": "This is a typical event.",
+    "maximumAttendees": 10
+}
+
+###
+
+POST http://localhost:3333/events/{eventId}/attendees
+Content-Type: application/json
+
+{
+    "name": "Attendee",
+    "email": "attendees@email.com",
+}
+

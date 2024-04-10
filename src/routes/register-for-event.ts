@@ -43,6 +43,9 @@ export async function registerForEvent(app: FastifyInstance){
         if(event.attendees.find(attende => attende.email === email))
             return reply.status(400).send({message: "Attendee alredy registered."})
 
+        if(event?.maximumAttendees && event.maximumAttendees === event.attendees.length) 
+            return reply.status(400).send({message: "the maximum number of participants has already been reached."})
+
         const new_attendee = await prisma.attendee.create({
             data: {
                 name,
