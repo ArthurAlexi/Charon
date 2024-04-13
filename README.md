@@ -16,8 +16,9 @@ O sistema fará um scan da credencial do participante para permitir a entrada no
 - [x] O organizador deve poder visualizar dados de um evento;
 - [] O organizador deve poser visualizar a lista de participantes;
 - [x] O participante deve poder se inscrever em um evento;
-- [] O participante deve poder visualizar seu crachá de inscrição;
-- [] O participante deve poder realizar check-in no evento;
+- [x] O participante deve poder visualizar seu crachá de inscrição;
+- [x] O participante deve poder realizar check-in no evento;
+- [] Adicionar o campo externalId com a lib Nano Id
 
 ### Regras de negócio
  
