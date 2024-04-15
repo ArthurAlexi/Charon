@@ -32,6 +32,45 @@ popular seed: npx prism db seed
  
   - [] Check-in at the event will be carried out using a QRCode;
 
-# Installing
+# Get Started
+
+#### requirements
+
+- [Node 20.x.x](https://nodejs.org/en)
+
+### environment variables
+`DATABASE_URL`
+
+If you want to run SQLite, `DATABASE_URL = file:.dev.db`
+
+### Installing
+
+After clone run the command:
+
+```
+ npm install
+```
+
+run this command to create the Tables in Database
+
+```
+ npm run db:migrate
+
+ # to view
+ npm run db:studio
+```
+
+### To run the App
+
+Run the command add access localhost:3333/docs to see the swagger in your browser. 
+```
+ npm run dev
+```
+
 
 # Technologies
+
+- Node
+- ORM Prisma
+- Framework Fastify
+- Typescript
