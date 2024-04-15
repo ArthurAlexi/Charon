@@ -6,6 +6,8 @@ import { prisma } from "../libs/prisma";
 export async function getAttendeeBadge(app: FastifyInstance){
     app.withTypeProvider<ZodTypeProvider>().get('/attendees/:attendeeId/badge', {
         schema: {
+            summary: 'Get attendee badge',
+            tags: ['attendees'],
             params: z.object({
                 attendeeId: z.coerce.number().int(),
             }),

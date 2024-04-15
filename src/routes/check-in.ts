@@ -7,12 +7,14 @@ export async function checkIn(app :FastifyInstance) {
     
     app.withTypeProvider<ZodTypeProvider>().get('/attendees/:attendeeId/check-in', {
         schema: {
+            summary: 'Get check-in',
+            tags: ['check-in'],
             params: z.object({
                 attendeeId: z.coerce.number().int(),
             }),
             response:{
                 200: z.object({
-                    checkInId: z.number().int().positive()
+                    checkInId: z.number().int()
                 }),
                 404: z.object({
                     message : z.string()

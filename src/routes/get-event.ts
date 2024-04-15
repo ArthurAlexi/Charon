@@ -7,6 +7,8 @@ export async function getEvent(app: FastifyInstance) {
     
     app.withTypeProvider<ZodTypeProvider>().get('/events/:eventId', {
         schema: {
+            summary: 'Get event',
+            tags: ['events'],
             params: z.object({
                 eventId: z.string().uuid()
             }),
@@ -16,10 +18,10 @@ export async function getEvent(app: FastifyInstance) {
                     title: z.string(),
                     slug: z.string(),
                     details: z.string().nullable(),
-                    maximumAttendees: z.number().int().positive().nullable(),
-                    attendeesAmount: z.number().int().positive(),
+                    maximumAttendees: z.number().int().nullable(),
+                    attendeesAmount: z.number().int(),
                 }),
-                400: z.object({
+                404: z.object({
                     message: z.string()
                 }),
             }
@@ -47,8 +49,11 @@ export async function getEvent(app: FastifyInstance) {
             
         })
 
-        if(event == null)
+        if(event === null){
+            console.log('CAIU AQUI');
+            
             return reply.status(404).send({ message: 'Event nol found.' })
+        }
 
             return reply.send({ 
                 eventId: event.id,
