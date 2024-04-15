@@ -25,7 +25,7 @@ app.register(fastifySwagger, {
         consumes: ['application/json'],
         produces: ['application/json'],
         info: {
-            title: 'Caronte',
+            title: 'Charon',
             description: 'API documentation',
             version: '1.0.0'
         }

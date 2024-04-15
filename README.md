@@ -1,31 +1,37 @@
-# Caronte
+# Charon
 
-O Caronte é uma aplicação de gestão de participantes em eventos presenciais.
+Charon is an application for managing participants in in-person events.
 
-A ferramenta permite que o organizador cadastre um evento e abra uma página pública de inscrição.
+The tool allows the organizer to register an event and open a public registration page.
 
-Os participantes inscritos podem emitir uma credencial para check-in no dia do evento.
+Registered participants can issue a credential for check-in on the day of the event.
 
-O sistema fará um scan da credencial do participante para permitir a entrada no evento.
+The system will scan the participant's credentials to allow entry to the event.
 
-# Requisitos
+popular seed: npx prism db seed
 
-### Requisitos funcionais
+# Requirements
 
-- [x] O organizador deve poder cadastrar um novo evento;
-- [x] O organizador deve poder visualizar dados de um evento;
-- [] O organizador deve poser visualizar a lista de participantes;
-- [x] O participante deve poder se inscrever em um evento;
-- [x] O participante deve poder visualizar seu crachá de inscrição;
-- [x] O participante deve poder realizar check-in no evento;
-- [] Adicionar o campo externalId com a lib Nano Id
+### Functional requirements
 
-### Regras de negócio
+- [x] The organizer must be able to register a new event;
+- [x] The organizer must be able to view event data;
+- [x] The organizer must be able to view the list of participants;
+- [x] The participant must be able to register for an event;
+- [x] The participant must be able to view their registration badge;
+- [x] The participant must be able to check-in at the event;
+
+
+### Business rules
  
- - [x] O participante só pode se inscrever em um evento uma única vez;
- - [] O participante só pode se inscrever em eventos com vagas disponíveis;
- - [] O participante só pode realizar check-in em um evento uma única vez;
+  - [x] The participant can only register for an event once;
+  - [x] Participants can only register for events with available places;
+  - [x] The participant can only check in to an event once;
 
-### Requisitos não-funcionais
+### Non-functional requirements
  
- - [] O check-in no evento será realizado através de um QRCode;
+  - [] Check-in at the event will be carried out using a QRCode;
+
+# Installing
+
+# Technologies
