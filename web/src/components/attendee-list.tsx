@@ -1,5 +1,9 @@
 import { Search, MoreHorizontal, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from "lucide-react"
 import { IconButton } from "./icon-button"
+import { Table } from "./table/table"
+import { TableHeader } from "./table/table-header"
+import { TableCell } from "./table/table-cell"
+import { TableRow } from "./table/table-row"
 
 export function AttendeeList() {
     return (
@@ -12,69 +16,65 @@ export function AttendeeList() {
                 </div>
             </div>
 
-            <div className="border border-white/10 rounded-lg">
-                <table className="w-full">
-                    <thead className="">
-                        <tr className="border-b border-white/10">
-                            <th style={{ width: 48 }} className="px-4 py-3 text-sm font-semibold text-left">
-                                <input type="checkbox" className="size-4 bg-black/20 rounded border border-white/10 checked:bg-orange-400" />
-                            </th>
-                            <th className="px-4 py-3 text-sm font-semibold text-left">Code</th>
-                            <th className="px-4 py-3 text-sm font-semibold text-left">Attendde</th>
-                            <th className="px-4 py-3 text-sm font-semibold text-left">Registration date</th>
-                            <th className="px-4 py-3 text-sm font-semibold text-left">Check-in date</th>
-                            <th style={{ width: 64 }} className="px-4 py-3 text-sm font-semibold text-left"></th>
-                        </tr>
-                    </thead>
-                    <tbody >
-                        <tr className="border-b border-white/10 hover:bg-white/5">
-                            <td className="px-4 py-3 text-sm  text-zinc-300">
-                                <input type="checkbox" className="size-4 bg-black/20 rounded border border-white/10 checked:bg-orange-400" />
-                            </td>
-                            <td className="px-4 py-3 text-sm  text-zinc-300">34232</td>
-                            <td className="px-4 py-3 text-sm  text-zinc-300">
-                                <div className="flex flex-col gap-1">
-                                    <span className="font-semibold text-white">Tnoas</span>
-                                    <span>tnoas@gmail.com</span>
+            <Table>
+                <thead className="">
+                    <tr className="border-b border-white/10">
+                        <TableHeader style={{ width: 48 }} >
+                            <input type="checkbox" className="size-4 bg-black/20 rounded border border-white/10 checked:bg-orange-400" />
+                        </TableHeader>
+                        <TableHeader >Code</TableHeader>
+                        <TableHeader >Attendde</TableHeader>
+                        <TableHeader >Registration date</TableHeader>
+                        <TableHeader >Check-in date</TableHeader>
+                        <TableHeader style={{ width: 64 }} ></TableHeader>
+                    </tr>
+                </thead>
+                <tbody >
+                    <TableRow >
+                        <TableCell >
+                            <input type="checkbox" className="size-4 bg-black/20 rounded border border-white/10 checked:bg-orange-400" />
+                        </TableCell>
+                        <TableCell >34232</TableCell>
+                        <TableCell >
+                            <div className="flex flex-col gap-1">
+                                <span className="font-semibold text-white">Tnoas</span>
+                                <span>tnoas@gmail.com</span>
+                            </div>
+                        </TableCell>
+                        <TableCell >7 days ago</TableCell>
+                        <TableCell >5 days ago</TableCell>
+                        <TableCell >
+                            <IconButton transparent>
+                                <MoreHorizontal className="size-4" />
+                            </IconButton>
+                        </TableCell>
+                    </TableRow>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <TableCell colSpan={3}>Showing 10 of 50 items</TableCell>
+                        <TableCell colSpan={3} className="text-right">
+                            <div className="inline-flex items-center gap-8">
+                                <span>page 1 of 5</span>
+                                <div className="flex gap-1.5">
+                                    <IconButton>
+                                        <ChevronsLeft className="size-4" />
+                                    </IconButton>
+                                    <IconButton>
+                                        <ChevronLeft className="size-4" />
+                                    </IconButton>
+                                    <IconButton>
+                                        <ChevronRight className="size-4" />
+                                    </IconButton>
+                                    <IconButton>
+                                        <ChevronsRight className="size-4" />
+                                    </IconButton>
                                 </div>
-                            </td>
-                            <td className="px-4 py-3 text-sm  text-zinc-300">7 days ago</td>
-                            <td className="px-4 py-3 text-sm  text-zinc-300">5 days ago</td>
-                            <td className="px-4 py-3 text-sm  text-zinc-300">
-                                <IconButton transparent>
-                                    <MoreHorizontal className="size-4" />
-                                </IconButton>
-                            </td>
-                        </tr>
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <td colSpan={3} className="px-4 py-3 text-sm font-semibold text-left">Showing 10 of 50 items</td>
-                            <td colSpan={3} className="px-4 py-3 text-sm font-semibold text-right">
-                                <div className="inline-flex items-center gap-8">
-                                    <span>page 1 of 5</span>
-                                    <div className="flex gap-1.5">
-                                        <IconButton>
-                                            <ChevronsLeft className="size-4" />
-                                        </IconButton>
-                                        <IconButton>
-                                            <ChevronLeft className="size-4" />
-                                        </IconButton>
-                                        <IconButton>
-                                            <ChevronRight className="size-4" />
-                                        </IconButton>
-                                        <IconButton>
-                                            <ChevronsRight className="size-4" />
-                                        </IconButton>
-                                    </div>
-                                </div>
-
-
-                            </td>
-                        </tr>
-                    </tfoot>
-                </table>
-            </div>
+                            </div>
+                        </TableCell>
+                    </tr>
+                </tfoot>
+            </Table>
         </div>
     )
 }
