@@ -4,7 +4,7 @@ import { Table } from "./table/table"
 import { TableHeader } from "./table/table-header"
 import { TableCell } from "./table/table-cell"
 import { TableRow } from "./table/table-row"
-import { useEffect, useState } from "react"
+import { ChangeEvent, useEffect, useState } from "react"
 import { attendees as attendeesMock } from "../mocks/attendees"
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
@@ -38,9 +38,18 @@ export function AttendeeList() {
         setPage(1)
     }
 
+    function onSearchInputChanged(event: ChangeEvent<HTMLInputElement>){
+        setSearch(event.target.value)
+        setPage(1)
+    }
+
     useEffect(()=> {
         const eventId = 'a57dfd40-dd0c-4213-be55-1aa4b5e183ef'
-        fetch(`htpp://localhost:3333/events/${eventId}/attendees?pageIndex=${page - 1}`)
+        const url = new URL(`htpp://localhost:3333/events/${eventId}/attendees`)
+        url.searchParams.set('pageIndex', String(page - 1) )
+        url.searchParams.set('query', search )
+        
+        fetch(url)
             .then(response => response.json())
             .then(data =>{ 
                 setAttendees(data)
@@ -60,7 +69,7 @@ export function AttendeeList() {
                 <h1 className="text-2xl font-bold">Attendees</h1>
                 <div className="w-72 px-3 py-1.5 border border-white/10  rounded-lg text-sm flex items-center gap-3">
                     <Search className="size-4 text-emerald-300" />
-                    <input className="bg-transparent flex-1 outline-none border-0 p-0 text-sm ring-0" onChange={(e) => setSearch(e.target.value)} placeholder="Search attenddees..." />
+                    <input className="bg-transparent flex-1 outline-none border-0 p-0 text-sm ring-0 focus:ring-0" onChange={(e) => onSearchInputChanged(e)} placeholder="Search attenddees..." />
                 </div>
             </div>
 
@@ -79,7 +88,7 @@ export function AttendeeList() {
                 </thead>
                 <tbody >
                     {
-                        ( apiError ?  attendees.slice((page - 1) * 10,page * 10) : attendees).map((attendee) => {
+                        ( apiError ?  attendees.filter(attendee => attendee.name.includes(search)).slice((page - 1) * 10,page * 10) : attendees).map((attendee) => {
                             return (
                                 <TableRow key={attendee.id}>
                                     <TableCell >
