@@ -14,40 +14,72 @@ dayjs.extend(relativeTime)
 
 export function AttendeeList() {
 
-    const [search, setSearch] = useState('')
     const [attendees, setAttendees] = useState<Attendee[]>([])
     const [apiError, setApiError] = useState(false)
     const [totalOfAttendees, setTotalOfAttendees] = useState(0)
-    const [page, setPage] = useState(1)
+    
+    const [search, setSearch] = useState(()=> {
+        const url = new URL(window.location.toString())
+        if(url.searchParams.has('search')){
+            return url.searchParams.get('search') ?? ''
+        }
+        return ''
+    })
+    
+    const [page, setPage] = useState(()=> {
+        const url = new URL(window.location.toString())
+        if(url.searchParams.has('page')){
+            return Number(url.searchParams.get('page'))
+        }
+        return 1
+    })
 
     const totalPages = Math.ceil( totalOfAttendees / 10)
 
+    function setCurrentPage(page: number){
+        const url = new URL(window.location.toString())
+        url.searchParams.set('page', String(page))
+        window.history.pushState({},'',url)
+        setPage(page)
+    }
+
+    function setCurrentSearch(search: string){
+        const url = new URL(window.location.toString())
+        url.searchParams.set('search', search)
+        window.history.pushState({},'',url)
+        setSearch(search)
+    }
+
     function goToNextPage(){
-        setPage(page + 1)
+        // setPage(page + 1)
+        setCurrentPage(page + 1)
     }
     
     function goToPrevPage(){
-        setPage(page - 1)
+        // setPage(page - 1)
+        setCurrentPage(page - 1)
     }
     
     function goToLastPage(){
-        setPage(totalPages)
+        // setPage(totalPages)
+        setCurrentPage(totalPages)
     }
     
     function goToFirstPage(){
-        setPage(1)
+        // setPage(1)
+        setCurrentPage(1)
     }
 
     function onSearchInputChanged(event: ChangeEvent<HTMLInputElement>){
-        setSearch(event.target.value)
-        setPage(1)
+        setCurrentSearch(event.target.value)
+        setCurrentPage(1)
     }
 
     useEffect(()=> {
         const eventId = 'a57dfd40-dd0c-4213-be55-1aa4b5e183ef'
         const url = new URL(`htpp://localhost:3333/events/${eventId}/attendees`)
         url.searchParams.set('pageIndex', String(page - 1) )
-        url.searchParams.set('query', search )
+        url.searchParams.set('query', search)
         
         fetch(url)
             .then(response => response.json())
@@ -69,7 +101,7 @@ export function AttendeeList() {
                 <h1 className="text-2xl font-bold">Attendees</h1>
                 <div className="w-72 px-3 py-1.5 border border-white/10  rounded-lg text-sm flex items-center gap-3">
                     <Search className="size-4 text-emerald-300" />
-                    <input className="bg-transparent flex-1 outline-none border-0 p-0 text-sm ring-0 focus:ring-0" onChange={(e) => onSearchInputChanged(e)} placeholder="Search attenddees..." />
+                    <input className="bg-transparent flex-1 outline-none border-0 p-0 text-sm ring-0 focus:ring-0" value={search} onChange={(e) => onSearchInputChanged(e)} placeholder="Search attenddees..." />
                 </div>
             </div>
 
