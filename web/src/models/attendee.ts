@@ -2,6 +2,6 @@ export interface Attendee{
     id: number,
     name: string,
     email: string,
-    createdAt: Date
-    checkedInAt: Date
+    createdAt: string
+    checkedInAt: string | null
 }

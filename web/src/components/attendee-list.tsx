@@ -4,18 +4,23 @@ import { Table } from "./table/table"
 import { TableHeader } from "./table/table-header"
 import { TableCell } from "./table/table-cell"
 import { TableRow } from "./table/table-row"
-import { useState } from "react"
-import { attendees } from "../mocks/attendees"
+import { useEffect, useState } from "react"
+import { attendees as attendeesMock } from "../mocks/attendees"
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
+import { Attendee } from "../models/attendee"
 
 dayjs.extend(relativeTime)
 
 export function AttendeeList() {
 
-    const totalPages = Math.ceil(attendees.length / 10)
     const [search, setSearch] = useState('')
+    const [attendees, setAttendees] = useState<Attendee[]>([])
+    const [apiError, setApiError] = useState(false)
+    const [totalOfAttendees, setTotalOfAttendees] = useState(0)
     const [page, setPage] = useState(1)
+
+    const totalPages = Math.ceil( totalOfAttendees / 10)
 
     function goToNextPage(){
         setPage(page + 1)
@@ -32,6 +37,22 @@ export function AttendeeList() {
     function goToFirstPage(){
         setPage(1)
     }
+
+    useEffect(()=> {
+        const eventId = 'a57dfd40-dd0c-4213-be55-1aa4b5e183ef'
+        fetch(`htpp://localhost:3333/events/${eventId}/attendees?pageIndex=${page - 1}`)
+            .then(response => response.json())
+            .then(data =>{ 
+                setAttendees(data)
+                setTotalOfAttendees(data.total)
+            })
+            .catch((err) => {
+                console.error(err)
+                setAttendees((attendeesMock as unknown) as Attendee[])
+                setTotalOfAttendees(attendeesMock.length)
+                setApiError(true)
+            })
+    }, [page])
 
     return (
         <div className="flex flex-col gap-4">
@@ -58,7 +79,7 @@ export function AttendeeList() {
                 </thead>
                 <tbody >
                     {
-                        attendees.slice((page - 1) * 10,page * 10).map((attendee) => {
+                        ( apiError ?  attendees.slice((page - 1) * 10,page * 10) : attendees).map((attendee) => {
                             return (
                                 <TableRow key={attendee.id}>
                                     <TableCell >
@@ -72,7 +93,7 @@ export function AttendeeList() {
                                         </div>
                                     </TableCell>
                                     <TableCell >{ dayjs().to(attendee.createdAt) }</TableCell>
-                                    <TableCell >{ dayjs().to(attendee.checkedInAt) }</TableCell>
+                                    <TableCell >{ attendee.checkedInAt !== null ? dayjs().to(attendee.checkedInAt) : 'N/A' }</TableCell>
                                     <TableCell >
                                         <IconButton transparent>
                                             <MoreHorizontal className="size-4" />
@@ -86,7 +107,7 @@ export function AttendeeList() {
                 </tbody>
                 <tfoot>
                     <tr>
-                        <TableCell colSpan={3}>Showing 10 of {attendees.length} items</TableCell>
+                        <TableCell colSpan={3}>Showing 10 of {totalOfAttendees} items</TableCell>
                         <TableCell colSpan={3} className="text-right">
                             <div className="inline-flex items-center gap-8">
                                 <span>page 1 of {totalPages}</span>
