@@ -1,3 +1,3 @@
 # Charon
 
-[Backend documentation](htpp://localhost:3333/events)
+[Backend documentation](https://github.com/ArthurAlexi/Charon/tree/main/backend)
