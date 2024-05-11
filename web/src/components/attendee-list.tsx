@@ -77,7 +77,7 @@ export function AttendeeList() {
 
     useEffect(()=> {
         const eventId = 'a57dfd40-dd0c-4213-be55-1aa4b5e183ef'
-        const url = new URL(`htpp://localhost:3333/events/${eventId}/attendees`)
+        const url = new URL(`http://localhost:3333/events/${eventId}/attendees`)
         url.searchParams.set('pageIndex', String(page - 1) )
         url.searchParams.set('query', search)
         
