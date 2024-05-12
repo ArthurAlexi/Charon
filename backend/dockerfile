@@ -4,6 +4,8 @@ WORKDIR /app
 
 COPY package.json .
 
+# RUN npm i --omit=dev
+
 RUN npm i
 
 COPY . .
@@ -13,5 +15,7 @@ EXPOSE 3333
 ENV DATABASE_URL=file:.dev.db
 
 RUN npm run build
+
+RUN npm run db:migrate
 
 CMD [ "npm", "start"]
