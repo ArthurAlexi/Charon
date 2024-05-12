@@ -1,7 +1,6 @@
 import fastify from "fastify"
 import fastifySwagger from "@fastify/swagger"
 import fastifySwaggerUi from "@fastify/swagger-ui"
-fastifyCors
 import {validatorCompiler, serializerCompiler, jsonSchemaTransform} from 'fastify-type-provider-zod'
 
 import { createEvent } from "./routes/create-events"
