@@ -13,11 +13,11 @@ export function Button({ title, isLoading = false, ...props }: ButtonProps) {
         <TouchableOpacity
             disabled={isLoading}
             activeOpacity={0.7}
-            style= {{ backgroundColor: colors.orange[500], width: "100%", height: 45 , justifyContent: "center", alignItems: "center"  }}
+            style= {{ backgroundColor: colors.orange[500], width: "100%", height: 56 , justifyContent: "center", alignItems: "center", borderRadius: 8  }}
             className="w-full h-14 bg-orange-500 items-center justify-center rounded-lg"
             {...props}>
             {isLoading ? <Loading /> :
-                <Text className="text-red-500 uppercase text-base font-bold">
+                <Text className="text-green-500 uppercase text-base font-bold">
                     {title}
                 </Text>
             }
