@@ -1,7 +1,13 @@
 import { Image, ImageBackground, Text, TouchableOpacity } from "react-native";
 import { View } from "react-native";
+import { Feather } from "@expo/vector-icons";
+import { colors } from "@/styles/colors";
+interface CredentialProps {
+    imageUrl ?: string
+    onChangeAvatar ?: () => {}
+}
 
-export default function Credential() {
+export default function Credential({ imageUrl, onChangeAvatar }: CredentialProps) {
 
     return (
         <View className="w-full self-stretch items-center">
@@ -16,15 +22,30 @@ export default function Credential() {
                     className="px-6 py-8 h-40 items-center self-stretch border-b border-white/10 overflow-hidden">
 
                     <View className="w-full flex-row justify-between items-center">
-                        <Text className="text-zinc-50 text-sm font-bold"> CHARON </Text>
-                        <Text className="text-zinc-50 text-sm font-bold"> 1232432 </Text>
+                        <Text className="text-zinc-50 text-md font-bold"> CHARON </Text>
+                        <Text className="text-zinc-50 text-md font-bold"> 1232432 </Text>
                     </View>
 
                     <View className="w-40 h-40 bg-black rounded-full" />
                 </ImageBackground>
 
-                <Image source={{ uri: "https://github.com/arthuralexi.png" }}
-                    className="w-36 h-36 rounded-full -mt-24" />
+                {
+                    imageUrl ? (
+                        <TouchableOpacity activeOpacity={0.9} onPress={onChangeAvatar}>
+                            <Image source={{ uri: imageUrl }}
+                                className="w-36 h-36 rounded-full -mt-24" />
+                        </TouchableOpacity>
+                    ) : (
+                        <TouchableOpacity
+                            style={{ width: 36, height: 36, borderRadius: 9999, backgroundColor: colors.gray[300], justifyContent: "center", alignItems: "center" }}
+                            activeOpacity={0.9} className="w-36 h-36 rounded-full -mt-24" onPress={onChangeAvatar}>
+                            className="w-36 h-36 rounded-full -mt-24"
+                        </TouchableOpacity>
+                    )
+                }
+
+
+
 
                 <Text className="text-zinc-50 text-2xl font-bold mt-4" > Arthur Alexi </Text>
                 <Text className="text-zinc-300 text-base font-regular mb-4" > arthuralexi@hotmail.com </Text>
