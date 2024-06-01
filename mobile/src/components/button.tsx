@@ -1,5 +1,6 @@
-import { Text, TouchableOpacity, TouchableOpacityProps } from "react-native";
+import { Text, TouchableOpacity, TouchableOpacityProps, View } from "react-native";
 import { Loading } from "./Loading";
+import { colors } from "@/styles/colors";
 
 
 interface ButtonProps extends TouchableOpacityProps {
@@ -12,13 +13,15 @@ export function Button({ title, isLoading = false, ...props }: ButtonProps) {
         <TouchableOpacity
             disabled={isLoading}
             activeOpacity={0.7}
-            className="w-full h-14 bg-orange-500 justify-center items-center rounded-lg"
+            style= {{ backgroundColor: colors.orange[500], width: "100%", height: 45 , justifyContent: "center", alignItems: "center"  }}
+            className="w-full h-14 bg-orange-500 items-center justify-center rounded-lg"
             {...props}>
             {isLoading ? <Loading /> :
-                <Text className="text-green-500 uppercase text-base font-bold">
+                <Text className="text-red-500 uppercase text-base font-bold">
                     {title}
                 </Text>
             }
         </TouchableOpacity>
+    
     )
 }
